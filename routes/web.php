@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', function(){
-    return 'hello world';
+Route::get('/form', function(){
+    return view('form2');
 });
 
 Auth::routes();
