@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Compreline</title>
+    <title>SB Admin v2</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -101,28 +101,6 @@
                         <li>
                             <a href="{{ url('account') }}"><i class="fa fa-dashboard fa-fw"></i> Main Menu</a>
                         </li>
-                        <li><a href="{{ url('/pr') }}"><i class="fa fa-gears fa-fw"></i> PR</a></li>
-                        <li><a href="{{ url('/ir') }}"><i class="fa fa-laptop fa-fw"></i> IR</a></li>
-                        <li><a href="{{ url('/policy_ledger') }}"><i class="fa fa-list-alt fa-fw"></i> Ledger</a></li>
-                        <li><a href="{{ url('/cm') }}"><i class="fa fa-fax fa-fw"></i> Claims Monitoring</a></li>
-                        <li><a href="{{ url('/pr_bounce') }}"><i class="fa fa-money fa-fw"></i> Bounce Cheque</a></li>
-                        <li>
-                            <a href="#"><i class="fa fa-th-list fa-fw"></i> Policy<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="{{ url('/policy') }}">Motor Schedule</a>
-                                </li>
-                                <!--
-                                <li>
-                                    <a href="{{ url('/policy_ledger') }}">Ledger</a>
-                                </li>
-                                -->
-                                <li>
-                                    <a href="{{ url('/policy_daily_transaction') }}">Daily Transaction</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -135,12 +113,12 @@
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Compreline</h1>
+                    <h1 class="page-header">FPG</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row">
+            <div class="row" style="display:none;">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -229,216 +207,271 @@
                         </a>
                     </div>
                 </div>
-            </div><!-- /.row -->                                                            
-            
-            <div class="row">
-            	<div class="class="col-lg-12">
-            		<img alt="" src="" style="width: 100%;height: 230px;">
-            	</div>
-            </div>
+            </div><!-- /.row -->
 
             <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a href="{{ url('policy') }}"><i class="fa fa-arrow-left"></i> Back</a>
+                <div class="col-lg-5 col-md-6"><!-- Red -->
+                    <div class="form-group">
+                        <label>Coverage:</label>
+                        <input type="text" name="policy_no" class="form-control">                        
                     </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                
-                                <div class="form-group">
-                                    <label>Policy No.</label>
-                                    <input type="text" name="policy_no" class="form-control">
-                                    @if($errors->has('policy_no'))
-                                    <p class="help-block">{{ $errors->first('policy_no') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Class of Insurance</label>
-                                    <input type="text" name="class_insurance" class="form-control">
-                                    @if($errors->has('class_insurance'))
-                                    <p class="help-block">{{ $errors->first('class_insurance') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Date Issue</label>
-                                    <input type="text" name="date_issue" class="datepicker form-control" placeholder="YYYY-MM-DD" class="datepicker form-control" readonly="true" style="cursor: pointer;background-color: rgba(255, 255, 255, 0.15);">                                            
-                                    @if($errors->has('date_issue'))
-                                    <p class="help-block">{{ $errors->first('date_issue') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Agency/Broker</label>
-                                    <input type="text" name="agency_broker" class="form-control">                                            
-                                    @if($errors->has('agency_broker'))
-                                    <p class="help-block">{{ $errors->first('agency_broker') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Insured</label>
-                                    <input type="text" name="assured_name" class="form-control">                                            
-                                    @if($errors->has('assured_name'))
-                                    <p class="help-block">{{ $errors->first('assured_name') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Contact No.</label>
-                                    <input type="text" name="contact_no" class="form-control">                                            
-                                    @if($errors->has('contact_no'))
-                                    <p class="help-block">{{ $errors->first('contact_no') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Address</label>
-                                    <input type="text" name="address" class="form-control">                                            
-                                    @if($errors->has('address'))
-                                    <p class="help-block">{{ $errors->first('address') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Inception Date</label>
-                                    <input type="text" name="inception_date" class="datepicker form-control" placeholder="YYYY-MM-DD" readonly="true" style="cursor: pointer;background-color: rgba(255, 255, 255, 0.15);">                                            
-                                    @if($errors->has('inception_date'))
-                                    <p class="help-block">{{ $errors->first('inception_date') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Year Make Model</label>
-                                    <input type="text" name="year_model" class="form-control">                                            
-                                    @if($errors->has('year_model'))
-                                    <p class="help-block">{{ $errors->first('year_model') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Plate Number</label>
-                                    <input type="text" name="plate_number" class="form-control">                                            
-                                    @if($errors->has('plate_number'))
-                                    <p class="help-block">{{ $errors->first('plate_number') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Serial Chassis</label>
-                                    <input type="text" name="serial_chassis" class="form-control">                                            
-                                    @if($errors->has('serial_chassis'))
-                                    <p class="help-block">{{ $errors->first('serial_chassis') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Motor Engine</label>
-                                    <input type="text" name="motor_engine" class="form-control">                                            
-                                    @if($errors->has('motor_engine'))
-                                    <p class="help-block">{{ $errors->first('motor_engine') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Seating Capacity</label>
-                                    <input type="text" name="seating_capacity" class="number_only form-control">                                            
-                                    @if($errors->has('seating_capacity'))
-                                    <p class="help-block">{{ $errors->first('seating_capacity') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Color</label>
-                                    <input type="text" name="color" class="form-control">                                            
-                                    @if($errors->has('color'))
-                                    <p class="help-block">{{ $errors->first('color') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Value</label>
-                                    <input type="text" name="value" class="number_only form-control">                                            
-                                    @if($errors->has('value'))
-                                    <p class="help-block">{{ $errors->first('value') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Deductible</label>
-                                    <input type="text" name="deductible" class="form-control">                                            
-                                    @if($errors->has('deductible'))
-                                    <p class="help-block">{{ $errors->first('deductible') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Authorized Repair Limit</label>
-                                    <input type="text" name="authorized_repair_limit" class="form-control">                                            
-                                    @if($errors->has('authorized_repair_limit'))
-                                    <p class="help-block">{{ $errors->first('authorized_repair_limit') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Towing</label>
-                                    <input type="text" name="towing" class="form-control">                                            
-                                    @if($errors->has('towing'))
-                                    <p class="help-block">{{ $errors->first('towing') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Bodily Injured</label>
-                                    <input type="text" name="bodily_injured" class="form-control">                                            
-                                    @if($errors->has('bodily_injured'))
-                                    <p class="help-block">{{ $errors->first('bodily_injured') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Property Damage</label>
-                                    <input type="text" name="property_damage" class="form-control">                                            
-                                    @if($errors->has('property_damage'))
-                                    <p class="help-block">{{ $errors->first('property_damage') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Mortgagee</label>
-                                    <input type="text" name="mortgagee" class="form-control">                                            
-                                    @if($errors->has('mortgagee'))
-                                    <p class="help-block">{{ $errors->first('mortgagee') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Act of Nature</label>
-                                    <input type="text" name="act_of_nature" class="form-control">                                            
-                                    @if($errors->has('act_of_nature'))
-                                    <p class="help-block">{{ $errors->first('act_of_nature') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Personal Accident</label>
-                                    <input type="text" name="personal_accident" class="form-control">                                            
-                                    @if($errors->has('personal_accident'))
-                                    <p class="help-block">{{ $errors->first('personal_accident') }}</p>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Writing Code</label>
-                                    <input type="text" name="writing_code" class="form-control">                                            
-                                    @if($errors->has('writing_code'))
-                                    <p class="help-block">{{ $errors->first('writing_code') }}</p>
-                                    @endif
-                                </div>                                
-                                <p>
-                                    <span><a id="add_file" style="cursor: pointer;"><i class="fa fa-plus"></i> File</a></span> &nbsp;&nbsp;&nbsp;
-                                    <span><a id="remove_file" style="cursor: pointer;"><i class="fa fa-trash"></i> Remove</a></span>
-                                </p>
-                                <div id="file_div">
+                    <div class="form-group">
+                        <label>Net Rate:</label>
+                        <input type="text" name="policy_no" class="form-control">                        
+                    </div>
+                    <div class="form-group">
+                        <label>BIPD:</label>
+                        <input type="text" name="policy_no" class="form-control">                        
+                    </div>
+                    <div class="form-group">
+                        <label>TAX:</label>
+                        <input type="text" name="policy_no" class="form-control">                        
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <button class="btn">Click Me</button> 
+                            <button class="btn-compute btn btn-success">Click Me</button>
+                        </div>
+                    </div>
+                </div><!-- Red -->
+                <div class="result col-lg-7 col-md-6" style="display: none;"><!-- Green -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-6" for="email">NET PREMIUM:</label>
+                        <div class="col-sm-10">
+                        <input type="text" name="policy_no" class="form-control" value="Php 100,000.00" style="border: 0px;font-size:larger;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-6" for="email">W/ AOG:</label>
+                        <div class="col-sm-10">
+                        <input type="text" name="policy_no" class="form-control" value="Php 100,000.00" style="border: 0px;font-size:larger;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-6" for="email">NET WITHOUT AOG:</label>
+                        <div class="col-sm-10">
+                        <input type="text" name="policy_no" class="form-control" value="Php 100,000.00" style="border: 0px;font-size:larger;">
+                        </div>
+                    </div>                    
+                    <div class="form-group">
+                        <label class="control-label col-sm-6" for="email">NET WITH AOG:</label>
+                        <div class="col-sm-10">
+                        <input type="text" name="policy_no" class="form-control" value="Php 100,000.00" style="border: 0px;font-size:larger;">
+                        </div>
+                    </div>
+                </div><!-- /Green -->
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="row" style="display: none;"><!-- row -->
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="{{ url('policy') }}"><i class="fa fa-arrow-left"></i> Back</a>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    
                                     <div class="form-group">
-                                        <input type="file" name="uploaded_files[]" class="form-control">                                        
-                                    </div>                                    
+                                        <label>Policy No.</label>
+                                        <input type="text" name="policy_no" class="form-control">
+                                        @if($errors->has('policy_no'))
+                                        <p class="help-block">{{ $errors->first('policy_no') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Class of Insurance</label>
+                                        <input type="text" name="class_insurance" class="form-control">
+                                        @if($errors->has('class_insurance'))
+                                        <p class="help-block">{{ $errors->first('class_insurance') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Date Issue</label>
+                                        <input type="text" name="date_issue" class="datepicker form-control" placeholder="YYYY-MM-DD" class="datepicker form-control" readonly="true" style="cursor: pointer;background-color: rgba(255, 255, 255, 0.15);">                                            
+                                        @if($errors->has('date_issue'))
+                                        <p class="help-block">{{ $errors->first('date_issue') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Agency/Broker</label>
+                                        <input type="text" name="agency_broker" class="form-control">                                            
+                                        @if($errors->has('agency_broker'))
+                                        <p class="help-block">{{ $errors->first('agency_broker') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Insured</label>
+                                        <input type="text" name="assured_name" class="form-control">                                            
+                                        @if($errors->has('assured_name'))
+                                        <p class="help-block">{{ $errors->first('assured_name') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contact No.</label>
+                                        <input type="text" name="contact_no" class="form-control">                                            
+                                        @if($errors->has('contact_no'))
+                                        <p class="help-block">{{ $errors->first('contact_no') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <input type="text" name="address" class="form-control">                                            
+                                        @if($errors->has('address'))
+                                        <p class="help-block">{{ $errors->first('address') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Inception Date</label>
+                                        <input type="text" name="inception_date" class="datepicker form-control" placeholder="YYYY-MM-DD" readonly="true" style="cursor: pointer;background-color: rgba(255, 255, 255, 0.15);">                                            
+                                        @if($errors->has('inception_date'))
+                                        <p class="help-block">{{ $errors->first('inception_date') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Year Make Model</label>
+                                        <input type="text" name="year_model" class="form-control">                                            
+                                        @if($errors->has('year_model'))
+                                        <p class="help-block">{{ $errors->first('year_model') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Plate Number</label>
+                                        <input type="text" name="plate_number" class="form-control">                                            
+                                        @if($errors->has('plate_number'))
+                                        <p class="help-block">{{ $errors->first('plate_number') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Serial Chassis</label>
+                                        <input type="text" name="serial_chassis" class="form-control">                                            
+                                        @if($errors->has('serial_chassis'))
+                                        <p class="help-block">{{ $errors->first('serial_chassis') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Motor Engine</label>
+                                        <input type="text" name="motor_engine" class="form-control">                                            
+                                        @if($errors->has('motor_engine'))
+                                        <p class="help-block">{{ $errors->first('motor_engine') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Seating Capacity</label>
+                                        <input type="text" name="seating_capacity" class="number_only form-control">                                            
+                                        @if($errors->has('seating_capacity'))
+                                        <p class="help-block">{{ $errors->first('seating_capacity') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Color</label>
+                                        <input type="text" name="color" class="form-control">                                            
+                                        @if($errors->has('color'))
+                                        <p class="help-block">{{ $errors->first('color') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Value</label>
+                                        <input type="text" name="value" class="number_only form-control">                                            
+                                        @if($errors->has('value'))
+                                        <p class="help-block">{{ $errors->first('value') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Deductible</label>
+                                        <input type="text" name="deductible" class="form-control">                                            
+                                        @if($errors->has('deductible'))
+                                        <p class="help-block">{{ $errors->first('deductible') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Authorized Repair Limit</label>
+                                        <input type="text" name="authorized_repair_limit" class="form-control">                                            
+                                        @if($errors->has('authorized_repair_limit'))
+                                        <p class="help-block">{{ $errors->first('authorized_repair_limit') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Towing</label>
+                                        <input type="text" name="towing" class="form-control">                                            
+                                        @if($errors->has('towing'))
+                                        <p class="help-block">{{ $errors->first('towing') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Bodily Injured</label>
+                                        <input type="text" name="bodily_injured" class="form-control">                                            
+                                        @if($errors->has('bodily_injured'))
+                                        <p class="help-block">{{ $errors->first('bodily_injured') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Property Damage</label>
+                                        <input type="text" name="property_damage" class="form-control">                                            
+                                        @if($errors->has('property_damage'))
+                                        <p class="help-block">{{ $errors->first('property_damage') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mortgagee</label>
+                                        <input type="text" name="mortgagee" class="form-control">                                            
+                                        @if($errors->has('mortgagee'))
+                                        <p class="help-block">{{ $errors->first('mortgagee') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Act of Nature</label>
+                                        <input type="text" name="act_of_nature" class="form-control">                                            
+                                        @if($errors->has('act_of_nature'))
+                                        <p class="help-block">{{ $errors->first('act_of_nature') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Personal Accident</label>
+                                        <input type="text" name="personal_accident" class="form-control">                                            
+                                        @if($errors->has('personal_accident'))
+                                        <p class="help-block">{{ $errors->first('personal_accident') }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Writing Code</label>
+                                        <input type="text" name="writing_code" class="form-control">                                            
+                                        @if($errors->has('writing_code'))
+                                        <p class="help-block">{{ $errors->first('writing_code') }}</p>
+                                        @endif
+                                    </div>                                
+                                    <p>
+                                        <span><a id="add_file" style="cursor: pointer;"><i class="fa fa-plus"></i> File</a></span> &nbsp;&nbsp;&nbsp;
+                                        <span><a id="remove_file" style="cursor: pointer;"><i class="fa fa-trash"></i> Remove</a></span>
+                                    </p>
+                                    <div id="file_div">
+                                        <div class="form-group">
+                                            <input type="file" name="uploaded_files[]" class="form-control">                                        
+                                        </div>                                    
+                                    </div>
+                                    
+                                    <input type="submit" name="submit" value="Submit value" class="btn btn-primary">                                                                               
+                                    
                                 </div>
-                                
-                                <input type="submit" name="submit" value="Submit value" class="btn btn-primary">                                                                               
-                                
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-            
+            </div><!-- /row -->
+
         </div><!-- /Page Wrapper -->                
 		
-	</div>      
+	    </div>      
 
-</div>
+    </div>
 
 
 
@@ -446,6 +479,10 @@
     $(document).ready(function() {        
         $('#dataTables-example').DataTable({
             responsive: true
+        });
+
+        $('.btn-compute').click(function(){
+            $('.result').show();
         });
     });
     </script>

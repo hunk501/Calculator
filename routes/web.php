@@ -22,3 +22,12 @@ Route::get('/form', function(){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// Application
+Route::get('/application', 'Application@index')->name('application');
+Route::post('/application/compute', 'Application@compute');
+
+// Insurance
+Route:: get('/insurance', 'Insurance@listing')->name('insurance');
+Route::any('insurance/add', 'Insurance@add');
