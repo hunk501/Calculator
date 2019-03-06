@@ -30,7 +30,7 @@
             <tbody>
                 @if(isset($records))
                 @foreach($records as $key => $record)
-                <tr row-id="{{ $record->id }}">											
+                <tr row-id="{{ $record->id }}" style="cursor:pointer;">											
                     <td>{{ $record->name }}</td>
                     <td>{{ $record->email }}</td>
                     <td>{{ $record->net_rate }}</td>
@@ -81,6 +81,12 @@ $(document).ready(function(){
     // Reset Button
     $("#btn-reset").click(function(){
         _inputFields(false);
+    });
+
+    // tr event
+    $('tr').click(function(){
+        var _id = $(this).attr('row-id');
+        location = "{{ url('insurance/edit/') .'/' }}" + _id;
     });
 
     $('#dataTables-example').DataTable();

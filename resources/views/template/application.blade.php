@@ -18,7 +18,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ url('application') .'/'. $record['id'] }}">
+                        <a href="{{ url('insurance') .'/edit/'. $record['id'] }}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

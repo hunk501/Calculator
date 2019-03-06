@@ -31,3 +31,4 @@ Route::post('/application/compute', 'Application@compute');
 // Insurance
 Route:: get('/insurance', 'Insurance@listing')->name('insurance');
 Route::any('insurance/add', 'Insurance@add');
+Route::any('insurance/edit/{id}', 'Insurance@edit');

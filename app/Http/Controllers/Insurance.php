@@ -22,14 +22,9 @@ class Insurance extends Controller
 
         if($request->isMethod('post')) {
             
-            Validator::make($request->all(), [
-                'name' => 'required|unique:tbl_insurance',
-                'email' =>  'required|unique:tbl_insurance',
-                'net_rate' => 'required',
-                'bipd' => 'required',
-                'tax' => 'required',
-                'other' => 'required'
-            ], $this->messages() )->validate();
+            Validator::make($request->all(), 
+                $this->getRules(), 
+                $this->messages() )->validate();
             
             /*
             if($validator->fails()) {
@@ -59,10 +54,47 @@ class Insurance extends Controller
         }                
     }
 
+    public function edit(Request $request, $id) {        
+        $record = MdlInsurance::where('id', $id)->first()->toArray();
+        if($request->isMethod('post')) {
+            $rules = $this->getRules();
+            // Update rules
+            $rules['name'] = 'required';
+            $rules['email'] = 'required';
+
+            // Validate
+            Validator::make($request->all(), $rules, $this->messages())->validate();
+            
+            $details = MdlInsurance::find($id);
+            $details->name = $request->input('name');
+            $details->email = $request->input('email');
+            $details->net_rate = $request->input('net_rate');
+            $details->bipd = $request->input('bipd');
+            $details->tax = $request->input('tax');
+            $details->other = $request->input('other');
+            $details->save();
+                                    
+            Session::flash('success', "Insurance has been updated!");
+            return redirect('insurance');
+        }
+        return view('template.insurance_edit')->with($record);
+    }    
+
     protected function messages() {
         return [       
             'net_rate.required' => 'The net rate field is required.'
         ];
+    }
+
+    protected function getRules() {
+        return [
+            'name' => 'required|unique:tbl_insurance',
+            'email' =>  'required|unique:tbl_insurance',
+            'net_rate' => 'required',
+            'bipd' => 'required',
+            'tax' => 'required',
+            'other' => 'required'
+        ];        
     }
 
 }

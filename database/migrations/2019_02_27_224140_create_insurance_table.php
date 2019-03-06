@@ -18,10 +18,10 @@ class CreateInsuranceTable extends Migration
             $table->string('name');
             $table->text('image_url')->nullable();
             $table->string('email')->unique();
-            $table->decimal('net_rate', 5, 2);
-            $table->decimal('bipd', 5, 2);
-            $table->decimal('tax', 5, 2);
-            $table->decimal('other', 5, 2);
+            $table->decimal('net_rate', 8, 3);
+            $table->decimal('bipd', 8, 2);
+            $table->decimal('tax', 8, 3);
+            $table->decimal('other', 8, 2);
             $table->timestamps();
         });
     }
