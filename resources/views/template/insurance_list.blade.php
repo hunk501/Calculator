@@ -11,16 +11,15 @@
     @endif
     <br>
     <div class="row">
-        <a href="{{ url('insurance/add') }}" class="btn btn-success">Add New</a> &nbsp;&nbsp;
-        <button class="btn btn-danger">Delete</button>
+        <a href="{{ url('insurance/add/'. $id) }}" class="btn btn-success">New Type</a> &nbsp;&nbsp;
+    <!-- <button class="btn btn-danger">Delete</button> -->
     </div>
     <br>    
     <div class="row">        
         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
             <thead>
-                <tr>                                    	
-                    <th>Name</th>
-                    <th>Email</th>
+                <tr>                                    	                    
+                    <th>Type</th>
                     <th>Net Rate</th>
                     <th>BIPD</th>
                     <th>Tax</th>
@@ -28,11 +27,10 @@
                 </tr>
             </thead>
             <tbody>
-                @if(isset($records))
+                @if(isset($records))                
                 @foreach($records as $key => $record)
                 <tr row-id="{{ $record->id }}" style="cursor:pointer;">											
-                    <td>{{ $record->name }}</td>
-                    <td>{{ $record->email }}</td>
+                    <td>{{ strtoupper($record->insurance_type) }}</td>                    
                     <td>{{ $record->net_rate }}</td>
                     <td>{{ $record->bipd }}</td>
                     <td>{{ $record->tax }}</td>
@@ -86,7 +84,7 @@ $(document).ready(function(){
     // tr event
     $('tr').click(function(){
         var _id = $(this).attr('row-id');
-        location = "{{ url('insurance/edit/') .'/' }}" + _id;
+        location = "{{ url('insurance/type/') .'/' }}" + _id;
     });
 
     $('#dataTables-example').DataTable();

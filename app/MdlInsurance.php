@@ -14,6 +14,12 @@ class MdlInsurance extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'net_rate', 'bipd', 'other', 'tax'
+        'name', 'email', 'image_url'
     ];
+
+    protected $guarded = [];
+
+    public function getInsuranceType() {
+        return $this->hasMany('App\MdlInsuranceType', 'insurance_id_fk');
+    }
 }

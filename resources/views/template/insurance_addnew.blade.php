@@ -2,26 +2,19 @@
 
 @section('bodyContent')
 <div id="page-wrapper">
-    @if(Session::has('success'))    
-    <div class="alert alert-success" style="margin-top: 10px;">
-        <a href="#" data-dismiss="alert" area-label="close">&times;</a>&nbsp;&nbsp;
-        <strong>{{ Session::get('success') }}</strong>        
-    </div>        
-    @endif
     <div class="row">
         <div class="col-lg-12">
             <h3 class="page-header">Insurance</h3>            
         </div>        
     </div>
     <div class="row">     
-        <form method="POST" action="{{ url('insurance/add/') .'/'. $id }}">   
+        <form method="POST" action="{{ url('insurance/new') }}">   
             {{ csrf_field() }}
-            <input type="hidden" name="id" value="{{ $id }}"/>            
 
             <div id="form1" class="col-lg-5 col-md-6">
                 <div class="form-group">
                     <label>Name:</label>
-                    <input type="text" name="name" value="{{ $name }}" class="form-control" required>                        
+                    <input type="text" name="name" value="{{ old('name') }}" class="form-control" required autofocus>                        
                     @if ($errors->has('name'))
                         <span class="help-block">
                             <strong>{{ $errors->first('name') }}</strong>
@@ -30,7 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label>Email:</label>
-                    <input type="text" name="email" value="{{ $email }}" class="form-control">   
+                    <input type="text" name="email" value="{{ old('email') }}" class="form-control">   
                     @if ($errors->has('email'))
                         <span class="help-block">
                             <strong>{{ $errors->first('email') }}</strong>
@@ -83,14 +76,34 @@
                     @endif                    
                 </div>                            
                 <div class="form-group">
-                    <div class="col-lg-6">                        
-                        <button id="btn-compute" class="btn btn-success">Submit Form</button>
-                    </div>
-                </div>                
-            </div>
+                    <button id="btn-reset" class="btn">Reset</button> &nbsp;&nbsp;
+                    <button id="btn-compute" class="btn btn-success">Submit Form</button>
+                </div>                                
+            </div>            
         </form>
     </div>
+    <!-- <div class="row">
+        <div class="col-lg-5 col-md-6">
+        <table>
+            <tbody>
+                <tr>
+                    <td>Type:</td>
+                    <td><input type="text" name="other" value="{{ old('other') }}"></td>
+                    <td>Net Rate:</td>
+                    <td><input type="text" name="other" value="{{ old('other') }}"></td>
+                    <td>BIPD:</td>
+                    <td><input type="text" name="other" value="{{ old('other') }}"></td>
+                    <td>Tax:</td>
+                    <td><input type="text" name="other" value="{{ old('other') }}"></td>
+                    <td>Others:</td>
+                    <td><input type="text" name="other" value="{{ old('other') }}"></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div> -->
 </div>
+<br><br>
 <script>
 </script>
 @endsection

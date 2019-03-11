@@ -7,19 +7,34 @@ use Illuminate\Http\Request;
 use Validator;
 use Session;
 use App\MdlInsurance;
+use App\MdlInsuranceType;
 
 class Insurance extends Controller
 {
-    public function listing(Request $request) {
-        $output = [];
-        $records = MdlInsurance::all();
-            
-        //echo"<pre>";print_r($records);echo"</pre>";
-        return view('template.insurance_list')->with(['records'=>$records]); //response()->json( $all );
+    public function __construct() {        
+        if(!session('insurance_lists')) {
+            $lists = MdlInsurance::all();
+            //$request->session()->put('insurance', $lists->toArray());
+            session(['insurance_lists'=>$lists->toArray()]);            
+        }
     }
 
-    public function add(Request $request) {
+    public function listing(Request $request, $id) {
+        $output = [];
 
+        if(!$request->session()->exists('insurance')) {
+            $lists = MdlInsurance::all();
+            //$request->session()->put('insurance', $lists->toArray());
+            session(['insurance'=>$lists->toArray()]);            
+        }     
+
+        $records = MdlInsuranceType::where('insurance_id_fk', $id)->get();    
+        //dd($records);
+        //echo"<pre>";print_r($records);echo"</pre>";
+        return view('template.insurance_list')->with(['records'=>$records, 'id'=>$id]); //response()->json( $all );
+    }
+
+    public function addNew(Request $request) {
         if($request->isMethod('post')) {
             
             Validator::make($request->all(), 
@@ -35,10 +50,18 @@ class Insurance extends Controller
             */           
 
             // Create Insurance
-            MdlInsurance::create([
+            $insurance = MdlInsurance::create([
                 'name' => $request->input('name'),
                 'email' =>  $request->input('email'),
-                'image_url' => '',
+                'image_url' => ''
+            ]);
+            
+            //echo"<pre>";print_r($insurance->id);echo"</pre>";die();
+
+            // Create Insurance Type
+            MdlInsuranceType::create([
+                'insurance_id_fk' => $insurance->id,
+                'insurance_type' =>  $request->input('type'),                
                 'net_rate' => $request->input('net_rate'),
                 'bipd' => $request->input('bipd'),
                 'tax' => $request->input('tax'),
@@ -47,15 +70,54 @@ class Insurance extends Controller
             
             $name = $request->input('name');
             $msg = $name . " Insurance has been created!";
+            $request->session()->flush();
             Session::flash('success', $msg);
-            return redirect('insurance');
+            return redirect('insurance/'. $insurance->id);
+        }
+        return view('template.insurance_addnew');
+    }
+
+    public function add(Request $request, $id) {
+
+        if($request->isMethod('post')) {
+            //dd($request->input());
+
+            $rules = $this->getRules();
+            // Update rules
+            $rules['name'] = 'required';
+            $rules['email'] = 'required';
+
+            // Validate
+            Validator::make($request->all(), $rules, $this->messages())->validate();
+            
+            // Update Insurance
+            $insurance = MdlInsurance::find($request->input('id'));
+            $insurance->name = $request->input('name');
+            $insurance->email = $request->input('email');
+            $insurance->save();
+
+            // Create Insurance type
+            MdlInsuranceType::create([
+                'insurance_id_fk' => $request->input('id'),
+                'insurance_type' =>  $request->input('type'),                
+                'net_rate' => $request->input('net_rate'),
+                'bipd' => $request->input('bipd'),
+                'tax' => $request->input('tax'),
+                'other' => $request->input('other')
+            ]);
+            
+            $request->session()->flush();
+            Session::flash('success', "Insurance has been updated!");
+            return redirect('insurance/'.$request->input('id'));
         } else {
-            return view('template.insurance_add');
+            $output = [];
+            $record = MdlInsurance::find($id);                        
+            return view('template.insurance_add')->with($record->toArray());
         }                
     }
 
     public function edit(Request $request, $id) {        
-        $record = MdlInsurance::where('id', $id)->first()->toArray();
+        $record = MdlInsuranceType::find($id)->first();
         if($request->isMethod('post')) {
             $rules = $this->getRules();
             // Update rules
@@ -65,20 +127,42 @@ class Insurance extends Controller
             // Validate
             Validator::make($request->all(), $rules, $this->messages())->validate();
             
-            $details = MdlInsurance::find($id);
-            $details->name = $request->input('name');
-            $details->email = $request->input('email');
-            $details->net_rate = $request->input('net_rate');
-            $details->bipd = $request->input('bipd');
-            $details->tax = $request->input('tax');
-            $details->other = $request->input('other');
-            $details->save();
-                                    
+            $insurance = MdlInsurance::find($request->input('insurance_id'));
+            $insurance->name = $request->input('name');
+            $insurance->email = $request->input('email');
+            $insurance->save();
+
+            $insurance_type = MdlInsuranceType::find($id);
+            $insurance_type->insurance_type = $request->input('type');
+            $insurance_type->net_rate = $request->input('net_rate');
+            $insurance_type->bipd = $request->input('bipd');
+            $insurance_type->tax = $request->input('tax');
+            $insurance_type->other = $request->input('other');
+            $insurance_type->save();
+            
+            $request->session()->flush();
             Session::flash('success', "Insurance has been updated!");
-            return redirect('insurance');
+            return redirect('insurance/'.$request->input('insurance_id'));
         }
         return view('template.insurance_edit')->with($record);
-    }    
+    }
+    
+    public function type(Request $request, $id) {
+        $output = [];
+        $record = MdlInsuranceType::find($id);
+        // echo"<pre>";print_r($record->toArray());echo"</pre>";
+        // echo"<pre>";print_r($record->getInsurance->id);echo"</pre>";
+        // echo"<pre>";print_r($record->getInsurance->name);echo"</pre>";
+        // echo"<pre>";print_r($record->getInsurance->email);echo"</pre>";
+        if($record) {
+            $output = $record->toArray();
+            $output['name'] = $record->getInsurance->name;
+            $output['email'] = $record->getInsurance->email;
+
+            //echo"<pre>";print_r($output);echo"</pre>";
+            return view('template.insurance_edit')->with($output);
+        }
+    }
 
     protected function messages() {
         return [       
@@ -90,6 +174,7 @@ class Insurance extends Controller
         return [
             'name' => 'required|unique:tbl_insurance',
             'email' =>  'required|unique:tbl_insurance',
+            'type' => 'required',
             'net_rate' => 'required',
             'bipd' => 'required',
             'tax' => 'required',

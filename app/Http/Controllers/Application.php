@@ -8,19 +8,26 @@ use App\MdlInsurance;
 
 class Application extends Controller
 {
-    
+    public function __construct() {        
+        if(!session('insurance_lists')) {
+            $lists = MdlInsurance::all();
+            //$request->session()->put('insurance', $lists->toArray());
+            session(['insurance_lists'=>$lists->toArray()]);            
+        }
+    }
+
     public function index() {
         $output = [];
         $colors = ['panel-primary','panel-green','panel-yellow','panel-red'];
 
-        $records = MdlInsurance::all()->toArray();
-        foreach($records as $key => $record) {
+        $insurance_lists = MdlInsurance::all()->toArray();
+        foreach($insurance_lists as $key => $record) {
             $record['panel_heading'] = $colors[$key];
             $output[] = $record;
         }
 
         //dd($output);
-        return view('template.application')->with(['records'=>$output]);
+        return view('template.application')->with(['insurance_lists'=>$output]);
     }
 
     public function compute(Request $request) {

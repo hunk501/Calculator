@@ -17,6 +17,7 @@
         <form method="POST" action="{{ url('insurance/edit/') .'/'. $id }}">   
             {{ csrf_field() }}
             <input type="hidden" name="id" value="{{ $id }}"/>
+            <input type="hidden" name="insurance_id" value="{{ $insurance_id_fk }}"/>
 
             <div id="form1" class="col-lg-5 col-md-6">
                 <div class="form-group">
@@ -34,6 +35,15 @@
                     @if ($errors->has('email'))
                         <span class="help-block">
                             <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif                     
+                </div>
+                <div class="form-group">
+                    <label>Type:</label>
+                    <input type="text" name="type" value="{{ $insurance_type }}" class="form-control">   
+                    @if ($errors->has('type'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('type') }}</strong>
                         </span>
                     @endif                     
                 </div>

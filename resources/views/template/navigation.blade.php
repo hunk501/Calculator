@@ -40,10 +40,15 @@
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-th-list fa-fw"></i> Settings<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="{{ url('insurance') }}">Insurance</a>
-                        </li>
+                    <ul class="nav nav-second-level">                        
+                        <li><a href="{{ url('insurance/new') }}">Add new</a></li>
+                        @if(session('insurance_lists'))
+                            @foreach(session('insurance_lists') as $k => $record)
+                            <li>
+                                <a href="{{ url('insurance') .'/'. $record['id'] }}">{{ strtoupper($record['name']) }}</a>
+                            </li>
+                            @endforeach
+                        @endif
                     </ul>                    
                 </li>
             </ul>

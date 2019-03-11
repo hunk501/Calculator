@@ -4,8 +4,8 @@
 <div id="page-wrapper">
     <br>
     <div class="row">
-        @if(isset($records))
-            @foreach($records as $key => $record) 
+        @if(isset($insurance_lists))
+            @foreach($insurance_lists as $key => $record) 
                 <div class="col-lg-3 col-md-9">
                     <div class="panel {{ $record['panel_heading'] }}">
                         <div class="panel-heading">
@@ -18,7 +18,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ url('insurance') .'/edit/'. $record['id'] }}">
+                        <a href="{{ url('compute') .'/'. $record['id'] }}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

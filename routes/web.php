@@ -29,6 +29,12 @@ Route::get('/application', 'Application@index')->name('application');
 Route::post('/application/compute', 'Application@compute');
 
 // Insurance
-Route:: get('/insurance', 'Insurance@listing')->name('insurance');
-Route::any('insurance/add', 'Insurance@add');
+Route::any('insurance/new', 'Insurance@addNew');
+Route:: get('/insurance/{id}', 'Insurance@listing')->name('insurance');
+Route::any('insurance/add/{id}', 'Insurance@add');
 Route::any('insurance/edit/{id}', 'Insurance@edit');
+Route::any('insurance/type/{id}', 'Insurance@type');
+
+// Compute
+Route::get('/compute/{insurance_id}', 'Compute@index')->name('compute');
+Route::post('/compute/process', 'Compute@process');
